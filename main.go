@@ -15,7 +15,7 @@ const MaxNumber = 45
 const AmountNumbers = 6
 const SupplementaryNumbers = 2
 
-type IISResponse struct {
+type ISSResponse struct {
 	Message     string `json:"message"`
 	Timestamp   int64  `json:"timestamp"`
 	ISSPosition struct {
@@ -31,7 +31,7 @@ func main() {
 
 	i := 0
 	for i < len(numbers) {
-		num := contactIISForNumber()
+		num := contactISSForNumber()
 		if contains(numbers, num) {
 			continue
 		}
@@ -41,7 +41,7 @@ func main() {
 
 	i = 0
 	for i < len(supps) {
-		num := contactIISForNumber()
+		num := contactISSForNumber()
 		if contains(supps, num) || contains(numbers, num) {
 			continue
 		}
@@ -62,7 +62,7 @@ func contains(sl []int, num int) bool {
 	return false
 }
 
-func contactIISForNumber() int {
+func contactISSForNumber() int {
 	resp, err := http.Get("http://api.open-notify.org/iss-now.json")
 	must(err)
 
@@ -70,13 +70,13 @@ func contactIISForNumber() int {
 	body, err := ioutil.ReadAll(resp.Body)
 	must(err)
 
-	var iisresult IISResponse
-	err = json.Unmarshal(body, &iisresult)
+	var issresult ISSResponse
+	err = json.Unmarshal(body, &issresult)
 	must(err)
 
-	rand.Seed(iisresult.Timestamp)
+	rand.Seed(issresult.Timestamp)
 
-	allNumbers := stripCharacters(iisresult.ISSPosition.Lat + iisresult.ISSPosition.Lat)
+	allNumbers := stripCharacters(issresult.ISSPosition.Lat + issresult.ISSPosition.Lat)
 
 	return getNumber(allNumbers)
 }
