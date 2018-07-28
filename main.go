@@ -42,7 +42,7 @@ func main() {
 	i = 0
 	for i < len(supps) {
 		num := contactIISForNumber()
-		if contains(supps, num) {
+		if contains(supps, num) || contains(numbers, num) {
 			continue
 		}
 		supps[i] = num
