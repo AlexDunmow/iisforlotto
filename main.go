@@ -93,7 +93,7 @@ func stripCharacters(s string) string {
 }
 
 func getNumber(s string) int {
-	to := 1 + rand.Intn(2)
+	to := 2
 	startsat := 1 + rand.Intn(len(s)-to)
 
 	runes := []rune(s)
